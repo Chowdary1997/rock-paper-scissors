@@ -4,7 +4,7 @@ node {
 		prefix = '~/setup/git/';
 	else 
 		prefix = 'c:\\setup\\git\\';
-	def mvnHome = tool 'Maven 3.3.9'
+	def mvnHome = tool 'Maven'
 	def tomcatWeb = ''
 	def mvnBin = mvnHome
 	if (isUnix()) {
@@ -19,7 +19,7 @@ node {
 
 	 ws('wsjpa') {
 			git url: "${prefix}/course-jpa"
-			withEnv(["JAVA_HOME=${ tool 'JDK 8' }","PATH+MAVEN=${mvnBin}"]) {
+			withEnv(["JAVA_HOME=${ tool 'JDK 11' }","PATH+MAVEN=${mvnBin}"]) {
 			if (isUnix()) 
 				sh "mvn clean install"
 			else {
@@ -32,7 +32,7 @@ node {
 	stage('jsf') { 
 	 ws('wsjsf') {
 			git url: "${prefix}/course-jsf"
-			withEnv(["JAVA_HOME=${ tool 'JDK 8' }","PATH+MAVEN=${mvnBin}"]) {
+			withEnv(["JAVA_HOME=${ tool 'JDK 11' }","PATH+MAVEN=${mvnBin}"]) {
 			if (isUnix()) {
 				sh "mvn clean install"
 				sh "cp target/course-jsf*.war ${tomcatWeb}/course-jsf.war"
@@ -48,7 +48,7 @@ node {
 	stage('web') {
 	 ws('wsweb') {
 			git url: "${prefix}/course-web"
-			withEnv(["JAVA_HOME=${ tool 'JDK 8' }","PATH+MAVEN=${mvnBin}"]) {
+			withEnv(["JAVA_HOME=${ tool 'JDK 11' }","PATH+MAVEN=${mvnBin}"]) {
 			if (isUnix()) {
 				sh "mvn clean install"
 				sh "cp target/course-web*.war ${tomcatWeb}/course-web.war"
@@ -64,7 +64,7 @@ node {
 	stage ('it-jsf') {
 	 ws('wsit-jsf') {
 			git url: "${prefix}/course-jsf"
-			withEnv(["JAVA_HOME=${ tool 'JDK 8' }","PATH+MAVEN=${mvnBin}"]) {
+			withEnv(["JAVA_HOME=${ tool 'JDK 11' }","PATH+MAVEN=${mvnBin}"]) {
 			if (isUnix()) 
 				sh "mvn compiler:testCompile failsafe:integration-test"
 			else 
@@ -77,7 +77,7 @@ node {
 	stage ('it-web') {
 	 ws('wsit-web') {
 			git url: "${prefix}/course-web"
-			withEnv(["JAVA_HOME=${ tool 'JDK 8' }","PATH+MAVEN=${mvnBin}"]) {
+			withEnv(["JAVA_HOME=${ tool 'JDK 11' }","PATH+MAVEN=${mvnBin}"]) {
 			if (isUnix()) 
 				sh "mvn compiler:testCompile failsafe:integration-test"
 			else 
